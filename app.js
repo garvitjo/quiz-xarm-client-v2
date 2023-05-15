@@ -4,7 +4,11 @@ const waitingScreenContainer = document.getElementById("waiting-page");
 const gameScreenContainer = document.getElementById("game-screen");
 const endScreenContainer = document.getElementById("endScreen");
 const startGameButton = document.getElementById('startGameButton');
-const finalScreenContainer = document.getElementById("finalScreen");
+const finalScreenWithoutLuckydraw = document.getElementById("finalScreen-no-luckydraw");
+const finalScreenWithLuckyDraw = document.getElementById("finalScreen-with-luckydraw");
+const feedbackContainer = document.getElementById("feedback-container");
+const finalScreenWithThanks = document.getElementById("final-screen-thanks")
+let currentFinalScreen;
 
 let isSinglePlayerGame;
 let thisPlayer;
@@ -14,21 +18,21 @@ let socket;
 let baseURL = 'https://quiz-xarm-jumbleword.onrender.com'
 //only for testing purpose
 baseURL = 'http://localhost:8080';
-// hidePage(beginScreenContainer);
-// unhidePage(finalScreenContainer);
+//hidePage(beginScreenContainer);
+//unhidePage(feedbackContainer);
 
 function enterFullscreen() {
-    const doc = window.document.documentElement;
-    if (doc.requestFullscreen) {
-      doc.requestFullscreen();
-    } else if (doc.mozRequestFullScreen) {
-      doc.mozRequestFullScreen();
-    } else if (doc.webkitRequestFullscreen) {
-      doc.webkitRequestFullscreen();
-    } else if (doc.msRequestFullscreen) {
-      doc.msRequestFullscreen();
-    }
+  const doc = window.document.documentElement;
+  if (doc.requestFullscreen) {
+    doc.requestFullscreen();
+  } else if (doc.mozRequestFullScreen) {
+    doc.mozRequestFullScreen();
+  } else if (doc.webkitRequestFullscreen) {
+    doc.webkitRequestFullscreen();
+  } else if (doc.msRequestFullscreen) {
+    doc.msRequestFullscreen();
   }
+}
 
   function beginGameSinglePlayer(){
     isSinglePlayerGame = true;
@@ -66,7 +70,7 @@ function getName() {
     if(isSinglePlayerGame){
       hidePage(homeScreenContainer);
       unhidePage(gameScreenContainer);
-      startQuiz(questionsData);
+      startQuiz();
       return;
     }
 
@@ -112,7 +116,7 @@ function showEndScreen(){
 
   if(isSinglePlayerGame){
     hidePage(gameScreenContainer);
-    unhidePage(finalScreenContainer);
+    unhidePage(finalScreenWithoutLuckydraw);
     resetVariables();
     return;
   }
@@ -124,64 +128,16 @@ function showEndScreen(){
   createLeaderboard(); 
 }
 
-function createLeaderboard(){
-  const leaderboardContainer = document.getElementById("player-rows-start");
-  
-  while(leaderboardContainer.hasChildNodes()){
-    leaderboardContainer.removeChild(leaderboardContainer.firstChild);
-  }
-
-  const waitingText = document.getElementById("waiting-for-quizEnd");
-  unhidePage(waitingText);
-}
-
-function populateLeaderboard(players){
-  let arr = calculateScore(players);
-  const waitingText = document.getElementById("waiting-for-quizEnd");
-  hidePage(waitingText);
-
-  const leaderboardContainer = document.getElementById("player-rows-start");
-  for(let i = 0 ; i < arr.length ; i++){
-    const tempRow = document.createElement('div');
-    const tempName = document.createElement('h1');
-    const tempPos = document.createElement('h1');
-    tempName.innerText = arr[i][1].playerName;
-
-    let positionText="well";
-    switch(i){
-      case 0: {positionText = "First"; break;}
-      case 1: {positionText = "Second"; break;}
-    }
-    tempPos.innerText = positionText;
-
-    tempRow.appendChild(tempName);
-    tempRow.appendChild(tempPos);
-    tempRow.classList.add("row");
-    leaderboardContainer.appendChild(tempRow);
-  }
-}
-
-function calculateScore(players){
-  let arr = Array.from(players);
-  arr.sort((a,b) => a[1].score - b[1].score);
-  return arr;
-}
-
 function startTheGame(){
   hidePage(waitingScreenContainer);
   unhidePage(gameScreenContainer);
   startQuiz(questionsData);
 }
 
-function continueFromLeaderboard(){
-  hidePage(endScreenContainer);
-  unhidePage(finalScreenContainer);
-  resetVariables();
-}
-
 function restartQuiz(){
-  hidePage(finalScreenContainer);
+  hidePage(currentFinalScreen);
   unhidePage(beginScreenContainer);
+  resetVariables();
 }
 
 function resetVariables(){
@@ -212,76 +168,4 @@ function unhidePage(page){
   if(page.classList.contains("hidden")){
     page.classList.remove("hidden");
   }
-}
-
-//------------websocket------------
-
-function openWebsocketConnection(){
-
-  socket = io(baseURL);
-
-  socket.on('connect', () => {
-  });
-  
-  socket.on('cannot-connect-now',()=>{
-    alert("Some Other multiplayer game is going on, please wait for it to finish");
-  });
-  
-  socket.on('disconnect', () => {
-  });
-  
-  socket.on("this-player",(tempPlayer)=>{
-    beginButtonClicked();
-    thisPlayer = tempPlayer;
-  });
-
-  socket.on('existing-players',(players)=>{
-    const tempMap = new Map(JSON.parse(players));
-    const iterator = tempMap.entries();
-    for (const entry of iterator){
-      if(entry[0] != thisPlayer.clientId){
-        otherPlayers.set(entry[0], entry[1]);
-      }
-    }
-  });
-  
-  socket.on('update-player-details', player =>{
-    if(thisPlayer.clientId == player.clientId){
-      thisPlayer = player;
-    }
-    else{
-      otherPlayers.set(player.clientId,player);
-    }
-  });
-
-  socket.on("ok-marked-you-ready",()=>{
-    hidePage(homeScreenContainer);
-    unhidePage(waitingScreenContainer);  
-  });
-
-  socket.on("start-the-game",()=>{
-    startTheGame();
-  });
-
-  socket.on("only-one-player",()=>{
-    alert("You are the only player in the game currently, wait of another player to join multiplayer game, or play single player instead");
-  });
-
-  socket.on("show-leaderboard", (players)=>{
-    //based on this data of all the players, identify the winner and send to leaderboard like that only
-    const tempMap = new Map(JSON.parse(players));
-    populateLeaderboard(tempMap);
-  });
-
-  socket.on("player-disconnected" , (id) =>{
-    otherPlayers.delete(id);
-  })
-
-  window.addEventListener('beforeunload', function(event) {
-    e.preventDefault();
-    e.returnValue = 'Are you sure you want to quit?';
-
-    if(socket){socket.disconnect = true;}
-    return e.returnValue;
-  });
 }

@@ -25,9 +25,9 @@
         </div>
         <button onclick="getName()" class="btn btn-large">Start now</button>
     </div>
-    <div id="waiting-page" class="hidden">
+    <!-- <div id="waiting-page" class="hidden">
         <h1>Waiting for other players to take up the Word challenge...</h1>
-    </div>
+    </div> -->
     <div id="game-screen" class="hidden">
         <div class="countdown" id="timer">30</div>
         <div class="question-area">
@@ -40,7 +40,18 @@
             <div class="question" id="question-statement"></div>
         </div>
     </div>
-    <div class="endScreen hidden" id="endScreen">
+    <div class="feedbackContainer hidden" id="feedback-container">
+        <div class="feedback-box" id="feedback-box-text">
+            Your answer is incorrect. Do you want to play again?
+        </div>
+        <div class="feedback-button-area">
+            <button class="btn" id="ok-button" onclick="okButtonPressed()">OK</button>
+            <button class="btn" id="yes-button" onclick="yesButtonPressed()">YES</button>
+            <button class="btn" id="no-button" onclick="noButtonPressed()">NO</button>
+        </div>
+    </div>
+
+    <!-- <div class="endScreen hidden" id="endScreen">
         <div class="leaderboard" id="leaderboard-final">
             <div class="leaderboard-title"><h1>Leaderboard</h1></div>
             <div class="row row-heading">
@@ -60,13 +71,26 @@
         </div>
         <div class="waiting-for-quiz-to-end" id="waiting-for-quizEnd">Waiting for other player's quiz to end...</div>
         <button onclick="continueFromLeaderboard()" class="btn">Continue</button>
-    </div>
-    <div class ="finalScreenContainer hidden" id="finalScreen">
+    </div> -->
+    <div class ="finalScreenContainer hidden" id="finalScreen-no-luckydraw">
         <img src="./assets/do-you-have-power-of-search.png" id="do-you-have-power-of-search">
-        <img src="./assets/final-screen-congratulation.png" id="rules-page-blue">
+        <img src="./assets/final-screen-congratulation.png" id="rules-page-blue-luckydraw">
         <button onclick="restartQuiz()" class="btn">Restart</button>
     </div>
 
+    <div class ="finalScreenContainer hidden" id="finalScreen-with-luckydraw">
+        <img src="./assets/do-you-have-power-of-search.png" id="do-you-have-power-of-search">
+        <!-- <img src="./assets/final-screen-congratulation.png" id="rules-page-blue-luckydraw"> -->
+        <h1>You get change for lucky draw</h1>
+        <button onclick="restartQuiz()" class="btn">Restart</button>
+    </div>
+
+    <div class ="finalScreenContainer hidden" id="final-screen-thanks">
+        <img src="./assets/do-you-have-power-of-search.png" id="do-you-have-power-of-search">
+        <!-- <img src="./assets/final-screen-congratulation.png" id="rules-page-blue-luckydraw"> -->
+        <h1>Thanks for participating in the game</h1>
+        <button onclick="restartQuiz()" class="btn">Restart</button>
+    </div>
 
     <section class="Audio-Section">
         <audio src="./assets/audio/correctAnswer.mp3" id="correctAnswerAudio"></audio>

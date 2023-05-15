@@ -124,7 +124,7 @@ body {
     max-width: fit-content;
 }
 
-#rules-page-blue{
+#rules-page-blue-luckydraw{
     aspect-ratio: 414/100;
     height: 30vh;
 }
@@ -207,7 +207,7 @@ body {
     background-color: var(--darkBlue);
 
     text-align: center;
-    font-size: 68px;
+    font-size: 60px;
     color: white;
     font-weight: bold;
 }
@@ -309,6 +309,56 @@ body {
     height: 60px;
     border-radius: 12px;
     box-shadow: 0px 4px 2px rgba(0, 0, 0, 0.4);
+}
+
+.feedbackContainer{
+    height: 100vh;
+    display: flex;
+    gap: 40px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    max-width: max-content;
+    margin: auto;
+}
+
+.feedback-box{
+    background-color: var(--pink);
+    width: 50vw;
+    border-radius: 12px;
+    padding: 10px;
+    
+    color: white;
+    font-size: 30pt;
+    font-weight: bold;
+    text-align: center;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.feedback-button-area{
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+#ok-button{
+    font-size: 20pt;
+    width: 4em;
+    height: 1.6em;
+}
+
+#yes-button{
+    font-size: 20pt;
+    width: 4em;
+    height: 1.6em;
+}
+
+#no-button{
+    font-size: 20pt;
+    width: 4em;
+    height: 1.6em;
 }
 
 #endScreen{
@@ -425,10 +475,33 @@ body {
 #game-screen.hidden{
     display: none;
 }
-#finalScreen.hidden{
+#finalScreen-no-luckydraw.hidden{
     display: none;
 }
 #waiting-for-quizEnd.hidden{
+    display: none;
+}
+#finalScreen-with-luckydraw.hidden{
+    display: none;
+}
+#feedback-container.hidden{
+    display: none;
+}
+#ok-button.hidden{
+    display: none;
+}
+
+#yes-button.hidden{
+    display: none;
+}
+
+#no-button.hidden{
+    display: none;
+}
+#feedback-box-text.hidden{
+    display: none;
+}
+#final-screen-thanks.hidden{
     display: none;
 }
 

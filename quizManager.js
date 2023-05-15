@@ -13,7 +13,7 @@ let questionStatement;
 let options;
 let correctAnswer;
 
-const timeAllowed = 30;
+const timeAllowed = 0;
 let currentTime = 0;
 let timeScore = 0;
 let shouldTimerRun =true;
@@ -47,47 +47,47 @@ function quizEnded(){
     clearInterval(timerIntervalID);
     playSound(quizCompletedAudio);
     shouldTimerRun = false;
-    showEndScreen();
 }
 
 function startTimer(){
     clearInterval(timerIntervalID);
     shouldTimerRun = true;
-    currentTime = timeAllowed;
+    currentTime = 0;
     timerHTML.innerText = currentTime;
     timerIntervalID = window.setInterval(updateTime, 1000);
 }
 
 function updateTime(){
     if(shouldTimerRun){
-        currentTime--;
+        currentTime++;
         timerHTML.innerText = currentTime;
-        if(currentTime <= 0){
-            shouldTimerRun = false;
-            displayFeedback(false, currentQuestion);
-        }
+        // HAVE A LOOK AT THIS
+        // if(currentTime <= 0){
+        //     shouldTimerRun = false;
+        //     displayFeedback(false, currentQuestion);
+        // }
     }
 }
 
-function displayFeedback(isAnsweredCorrectly, question){
-    shouldTimerRun = false;
-    clearInterval(timerIntervalID);
-    timeScore += timeAllowed - currentTime;
+// function displayFeedback(isAnsweredCorrectly, question){
+//     shouldTimerRun = false;
+//     clearInterval(timerIntervalID);
+//     timeScore += timeAllowed - currentTime;
 
-    const answerArea = document.getElementById("answer-area");
+//     const answerArea = document.getElementById("answer-area");
     
-    if(isAnsweredCorrectly){
-        answerArea.childNodes.forEach(c =>{
-            c.classList.add("correct-answer");
-        });
-    }else{
-        answerArea.childNodes.forEach(c =>{
-            c.classList.add("wrong-answer");
-        });
-    }
+//     if(isAnsweredCorrectly){
+//         answerArea.childNodes.forEach(c =>{
+//             c.classList.add("correct-answer");
+//         });
+//     }else{
+//         answerArea.childNodes.forEach(c =>{
+//             c.classList.add("wrong-answer");
+//         });
+//     }
 
-    window.setTimeout(()=>{getNextQuestion();},1000)
-}
+//     window.setTimeout(()=>{getNextQuestion();},1000)
+// }
 
 function displayQuestion(question){
     questionStatement = question.questionStatement;
@@ -199,7 +199,16 @@ function validateAnswer(){
         //play some confetti animation, wait for 1 second and then move to the next question
         correctAnswerAudio.play();
         shouldTimerRun = false;
-        displayFeedback(true, currentQuestion);
+
+        if(currentTime < 60){
+            currentFinalScreen = finalScreenWithLuckyDraw;
+        }
+        else{
+            currentFinalScreen = finalScreenWithoutLuckydraw;
+        }
+
+        hidePage(gameScreenContainer);
+        unhidePage(currentFinalScreen);
     }
     else{
         //play some wrong answer animation
@@ -207,9 +216,12 @@ function validateAnswer(){
         const answerArea = document.getElementById("answer-area");
         answerArea.childNodes.forEach(c =>{
         c.classList.add("wrong-answer");
-        window.setTimeout(()=>{c.classList.toggle("wrong-answer")},500)
+        window.setTimeout(()=>{c.classList.toggle("wrong-answer"); displayQuestion(currentQuestion);
+        shouldTimerRun = false;
+        hidePage(gameScreenContainer);
+        displayFeedback();
+    },300)
         });
-        
     }
 }
 
@@ -224,6 +236,42 @@ function playSound(audio) {
 }
 
 
+//feedback box separated
+const feedbackText = document.getElementById("feedback-box-text");
+const okButton = document.getElementById("ok-button");
+const yesButton = document.getElementById("yes-button");
+const noButton = document.getElementById("no-button");
+
+//displayFeedback();
+function displayFeedback(){
+    shouldTimerRun = false;
+    unhidePage(feedbackContainer);
+    unhidePage(feedbackText);
+    feedbackText.innerText = "Your answer is incorrect. Do you want to play again?";
+    hidePage(okButton);
+    unhidePage(yesButton);
+    unhidePage(noButton);
+}
+
+function yesButtonPressed(){
+    shouldTimerRun = true;
+    hidePage(feedbackContainer);
+    unhidePage(gameScreenContainer);
+}
+
+function noButtonPressed(){
+    feedbackText.innerText = "The correct answer is " + currentQuestion.correctAnswer;
+    hidePage(yesButton);
+    hidePage(noButton);
+    unhidePage(okButton);
+}
+
+function okButtonPressed(){
+    currentFinalScreen = finalScreenWithThanks;
+    quizEnded();
+    hidePage(feedbackContainer);
+    unhidePage(currentFinalScreen);
+}
 
 //testing only
 // displayQuestion({
