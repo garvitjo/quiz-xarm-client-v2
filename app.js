@@ -8,6 +8,8 @@ const finalScreenWithoutLuckydraw = document.getElementById("finalScreen-no-luck
 const finalScreenWithLuckyDraw = document.getElementById("finalScreen-with-luckydraw");
 const feedbackContainer = document.getElementById("feedback-container");
 const finalScreenWithThanks = document.getElementById("final-screen-thanks")
+
+let isNewUser = true; 
 let currentFinalScreen;
 
 let isSinglePlayerGame;
@@ -58,6 +60,7 @@ function beginButtonClicked() {
 
 function getName() {
     let name = document.getElementById("playerName").value.trim();
+    name = name.toLowerCase();
     if (name === "") {
       alert("Please enter your email");
       return;
@@ -66,6 +69,7 @@ function getName() {
       return;
     }
     thisPlayer.playerName = name;
+    validateNewUser(name);
     
     if(isSinglePlayerGame){
       hidePage(homeScreenContainer);
@@ -78,6 +82,24 @@ function getName() {
     socket.emit("ready-to-start-game", thisPlayer);
 }
 
+function validateNewUser(email){
+  fetch(baseURL + '/authenticalmail', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ email }),
+  })
+    .then(response => response.json())
+    .then(data => {
+      isNewUser = data.isRegistered;
+      // Use the isRegistered value as needed in your client-side code
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      // Handle the error condition
+    });
+}
 
 function getQuestion() {
     let cachedData = JSON.parse(localStorage?.getItem('questions'));

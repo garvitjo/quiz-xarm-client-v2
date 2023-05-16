@@ -200,7 +200,10 @@ function validateAnswer(){
         correctAnswerAudio.play();
         shouldTimerRun = false;
 
-        if(currentTime < 60){
+        if(!isNewUser){
+            currentFinalScreen = finalScreenWithThanks;
+        }
+        else if(currentTime < 60){
             currentFinalScreen = finalScreenWithLuckyDraw;
         }
         else{
