@@ -138,10 +138,10 @@ function displayQuestion(question){
         newOptionButton.onclick = optionPressed;
         optionBox.appendChild(newOptionButton);
     }
-    const newRemoveButton = document.createElement('button');
+    const newRemoveButton = document.createElement('div');
     newRemoveButton.classList.add('remove-option');
     newRemoveButton.onclick = removeOption;
-    optionBox.appendChild(newRemoveButton);
+    answerArea.appendChild(newRemoveButton);
 
     //highlight the first option button
     submitButtonHTML.disabled = true;

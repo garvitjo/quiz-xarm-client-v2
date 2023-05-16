@@ -20,8 +20,8 @@
         <img src="./assets/do-you-have-power-of-search.png" id="do-you-have-power-of-search">
         <img src="./assets/rules-page-blue.png" id="rules-page-blue">
         <div id="input-name-container">
-            <label for="playerName">Please enter your name</label>
-            <input type="text" autocomplete="off" autofocus name="user-name" placeholder="Enter your Name" class="username" id="playerName">
+            <label for="playerName">Please enter your email</label>
+            <input type="text" autocomplete="off" autofocus name="user-name" placeholder="Enter your Email" class="username" id="playerName">
         </div>
         <button onclick="getName()" class="btn btn-large">Start now</button>
     </div>
@@ -74,21 +74,21 @@
     </div> -->
     <div class ="finalScreenContainer hidden" id="finalScreen-no-luckydraw">
         <img src="./assets/do-you-have-power-of-search.png" id="do-you-have-power-of-search">
-        <img src="./assets/final-screen-congratulation.png" id="rules-page-blue-luckydraw">
+        <img src="./assets/final-screen-congratulation.png" id="rules-page-blue-noluckydraw">
         <button onclick="restartQuiz()" class="btn">Restart</button>
     </div>
 
     <div class ="finalScreenContainer hidden" id="finalScreen-with-luckydraw">
-        <img src="./assets/do-you-have-power-of-search.png" id="do-you-have-power-of-search">
-        <!-- <img src="./assets/final-screen-congratulation.png" id="rules-page-blue-luckydraw"> -->
-        <h1>You get change for lucky draw</h1>
+        <!-- <img src="./assets/do-you-have-power-of-search.png" id="do-you-have-power-of-search"> -->
+        <img src="./assets/endScreen-luckdraw.png" id="rules-page-blue-luckydraw">
+        <!-- <h1>You get change for lucky draw</h1> -->
         <button onclick="restartQuiz()" class="btn">Restart</button>
     </div>
 
     <div class ="finalScreenContainer hidden" id="final-screen-thanks">
-        <img src="./assets/do-you-have-power-of-search.png" id="do-you-have-power-of-search">
-        <!-- <img src="./assets/final-screen-congratulation.png" id="rules-page-blue-luckydraw"> -->
-        <h1>Thanks for participating in the game</h1>
+        <!-- <img src="./assets/do-you-have-power-of-search.png" id="do-you-have-power-of-search"> -->
+        <img src="./assets/thank-you-end-screen.png" id="rules-page-blue-thanks">
+        <!-- <h1>Thanks for participating in the game</h1> -->
         <button onclick="restartQuiz()" class="btn">Restart</button>
     </div>
 
@@ -99,7 +99,7 @@
         <audio src="./assets/audio/wrongAnswer.mp3" id="wrongAnswerAudio"></audio>
     </section>
     <!-- <script src="https://quiz-xarm-jumbleword.onrender.com/socket.io/socket.io.js"></script> -->
-    <script src="http://localhost:8080/socket.io/socket.io.js"></script>
+    <!-- <script src="http://localhost:8080/socket.io/socket.io.js"></script> -->
     <script src="./app.js"></script>
     <script src="./quizManager.js"></script>
 </body>

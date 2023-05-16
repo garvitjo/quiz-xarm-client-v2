@@ -47,7 +47,7 @@ body {
 
 #do-you-have-power-of-search{
     aspect-ratio: 32/10;
-    height: 30vh;
+    height: 25vh;
 }
 
 #choose-gamemode {
@@ -62,7 +62,7 @@ body {
     background-color: var(--yellow);
     border-radius: 20px;
     color: var(--btn-text);
-    font-size: 30pt;
+    font-size: 25pt;
     border-radius: 60px;
     box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.4);
     font-weight: bold;
@@ -124,9 +124,9 @@ body {
     max-width: fit-content;
 }
 
-#rules-page-blue-luckydraw{
-    aspect-ratio: 414/100;
-    height: 30vh;
+#rules-page-blue{
+    aspect-ratio: 1084/327;
+    height: 40vh;
 }
 
 #input-name-container{
@@ -134,19 +134,19 @@ body {
     width: 90%;
     justify-content: space-evenly;
     align-items: center;
-    margin-bottom: 40px;
+    margin-bottom: 20px;
 }
 
 #input-name-container label{
     color: var(--yellow);
-    font-size: 35pt;
+    font-size: 30pt;
     font-weight: bold;
 }
 
 #input-name-container input{
     width: 40%;
     height: 1.5em;
-    font-size: 30pt;
+    font-size: 20pt;
     font-family: "Myriad Pro Bold";
     text-align: center;
 }
@@ -244,19 +244,19 @@ body {
     width: 100vw;
     justify-content: center;
     gap: 10px;
-    margin-bottom: 2vh;
+    align-items: center;
     margin-top: 10vh;
 }
 
 .input-box{
-    width: 60px;
-    height: 60px;
+    width: 50px;
+    height: 50px;
     background-color: white;
     color: var(--btn-text);
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 35px;
+    font-size: 30px;
     border-radius: 12px;
 }
 
@@ -279,16 +279,16 @@ body {
 .option-area{
     display: flex;
     gap: 10px;
-    margin-left: 90px;
+    margin-right: 100px;
 }
 
 .option{
     background-color: var(--pink);
-    width: 60px;
-    height: 60px;
+    width: 50px;
+    height: 50px;
     border-radius: 12px;
     font-family: "Myriad Pro Bold";
-    font-size: 35px;
+    font-size: 30px;
     border: none;
     font-weight: bold;
     color: var(--btn-text);
@@ -299,14 +299,13 @@ body {
 
 .remove-option{
     margin-left: 30px;
-    
     background-image: url(assets/delete.png);
     background-position: center;
     background-repeat: no-repeat;
     background-size: 80%;
-    
-    width: 60px;
-    height: 60px;
+    background-color: white;
+    width: 50px;
+    height: 50px;
     border-radius: 12px;
     box-shadow: 0px 4px 2px rgba(0, 0, 0, 0.4);
 }
@@ -326,7 +325,7 @@ body {
     background-color: var(--pink);
     width: 50vw;
     border-radius: 12px;
-    padding: 10px;
+    padding: 20px;
     
     color: white;
     font-size: 30pt;
@@ -370,87 +369,27 @@ body {
     align-items: center;
 }
 
-.leaderboard{
-    width: 45vw;
-    padding: 10px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    gap: 2px;
-}
-
-.leaderboard-title{
-    width: 100%;
-    height: 65px;
-    background-color: var(--yellow);
-    border-radius: 10px 10px 2px 2px;
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.leaderboard-title h1{
-    font-size: 45pt;
-    color: var(--btn-text);
-    font-weight: bold;
-}
-
-
-.row{
-    padding: 0 10px;
-    display: flex;
-    flex-direction: row;
-    height: 40px;
-    align-items: center;
-    justify-content: space-between;
-    background-color: rgb(209,210,212);
-    border-radius: 5px;
-    padding: 0 40px;
-}
-
-.row h1{
-    font-size: 20pt;
-    color: rgb(11,29,79);
-    font-weight: normal;
-}
-
-.row-heading{
-    background-color: var(--pink);
-    border-radius: 2px;
-    height: 50px;
-    padding: 0 40px;
-}
-
-.row-heading h1{
-    border-radius: 5px;
-    font-size: 24pt;
-    color: white;
-    font-weight: lighter;
-}
-
-#player-rows-start{
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-}
-
-.row:last-child{
-    border-radius: 2px 2px 10px 10px;
-}
-
-.waiting-for-quiz-to-end{
-    color: var(--yellow);
-    font-size: 20pt;
-    font-weight: lighter;
-}
-
 .finalScreenContainer{
     height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+#rules-page-blue-noluckydraw{
+    aspect-ratio: 1226/340;
+    height: 25vh;
+}
+
+#rules-page-blue-luckydraw{
+    aspect-ratio: 1202/511;
+    height: 40vh;
+}
+
+#rules-page-blue-thanks{
+    aspect-ratio: 1202/360;
+    height: 38vh;
 }
 
 .finalScreenContainer button{
