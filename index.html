@@ -21,9 +21,12 @@
         <img src="./assets/rules-page-blue.png" id="rules-page-blue">
         <div id="input-name-container">
             <label for="playerName">Please enter your email</label>
-            <input type="text" autocomplete="off" autofocus name="user-name" placeholder="Enter your Email" class="username" id="playerName">
+            <div id="inputfieldContainer">
+                <input type="email" autocomplete="off" autofocus name="user-name" placeholder="Enter your Email" class="username" id="playerName">
+                <div id="error-message"></div>
+            </div>
         </div>
-        <button onclick="getName()" class="btn btn-large">Start now</button>
+        <button onclick="getName()" class="btn btn-large">Proceed</button>
     </div>
     <!-- <div id="waiting-page" class="hidden">
         <h1>Waiting for other players to take up the Word challenge...</h1>

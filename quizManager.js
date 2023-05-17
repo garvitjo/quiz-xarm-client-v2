@@ -29,6 +29,7 @@ let correctAnswerAudio = document.getElementById("correctAnswerAudio");
 
 function startQuiz(){
     timeScore = 0;
+    hasGameStarted = true;
     getNextQuestion();
 }
 
@@ -44,6 +45,7 @@ function getNextQuestion(){
 }
 
 function quizEnded(){
+    hasGameStarted = false;
     clearInterval(timerIntervalID);
     playSound(quizCompletedAudio);
     shouldTimerRun = false;
@@ -257,12 +259,30 @@ function displayFeedback(){
 }
 
 function yesButtonPressed(){
+    if(!hasGameStarted && !isNewUser){
+        hidePage(feedbackContainer);
+        hidePage(homeScreenContainer);
+        unhidePage(gameScreenContainer);
+        startQuiz();
+        displayError("");
+        return;
+    }
+
     shouldTimerRun = true;
     hidePage(feedbackContainer);
     unhidePage(gameScreenContainer);
 }
 
 function noButtonPressed(){
+
+    if(!hasGameStarted && !isNewUser){
+        hidePage(homeScreenContainer);
+        hidePage(feedbackContainer);
+        currentFinalScreen = finalScreenWithThanks;
+        unhidePage(currentFinalScreen);
+        quizEnded();
+    }
+
     feedbackText.innerText = "The correct answer is " + currentQuestion.correctAnswer;
     hidePage(yesButton);
     hidePage(noButton);
@@ -282,3 +302,4 @@ function okButtonPressed(){
 //     "options":["V","I","R","L","E","I","O","Y","T","S","B","B","A"],
 //     "correctAnswer":"OBSERVABILITY"
 // });
+

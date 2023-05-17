@@ -9,6 +9,7 @@ const finalScreenWithLuckyDraw = document.getElementById("finalScreen-with-lucky
 const feedbackContainer = document.getElementById("feedback-container");
 const finalScreenWithThanks = document.getElementById("final-screen-thanks")
 
+let hasGameStarted = false;
 let isNewUser = true; 
 let currentFinalScreen;
 
@@ -38,6 +39,7 @@ function enterFullscreen() {
 
   function beginGameSinglePlayer(){
     isSinglePlayerGame = true;
+    hasGameStarted = false;
     thisPlayer = {
       playerName: "",
       isReady: false,
@@ -62,24 +64,38 @@ function getName() {
     let name = document.getElementById("playerName").value.trim();
     name = name.toLowerCase();
     if (name === "") {
-      alert("Please enter your email");
+      displayError("*Please enter your email");
       return;
     } else if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(name)) {
-      alert("Please enter a valid email");
+      displayError("*Please enter a valid email");
       return;
     }
     thisPlayer.playerName = name;
     validateNewUser(name);
-    
+    //display a popoup here if needed
+    if(!isNewUser){
+      displayOldPlayerPopup();
+      return;
+    }
     if(isSinglePlayerGame){
       hidePage(homeScreenContainer);
       unhidePage(gameScreenContainer);
       startQuiz();
+      displayError("");
       return;
     }
 
     socket.emit('update-player-details', thisPlayer);
     socket.emit("ready-to-start-game", thisPlayer);
+}
+
+function displayOldPlayerPopup(){
+  hidePage(homeScreenContainer);
+  unhidePage(feedbackContainer);
+  unhidePage(yesButton);
+  unhidePage(noButton);
+  hidePage(okButton);
+  feedbackText.innerText = "Do you want to play again?";
 }
 
 function validateNewUser(email){
@@ -170,6 +186,7 @@ function resetVariables(){
     console.log(error);
   });
 
+  hasGameStarted = false;
   thisPlayer = null;
   otherPlayers.clear();
   isSinglePlayerGame = false;
@@ -177,6 +194,11 @@ function resetVariables(){
   if(socket){
     socket.disconnect(true);
   }
+}
+
+function displayError(text){
+    const errorBox = document.getElementById("error-message");
+    errorBox.innerText = text;
 }
 
 function hidePage(page){
